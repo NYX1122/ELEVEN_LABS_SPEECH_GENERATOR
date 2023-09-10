@@ -1,4 +1,5 @@
-const wishContinue = require('../wish_continue');
+const logger = require('loggers');
+const wishContinue = require('wishContinue');
 
 async function handleSubscriptionInfo(
   subscriptionInfo,
@@ -12,13 +13,13 @@ async function handleSubscriptionInfo(
     )
   );
   try {
-    console.log('Handling subscription information...');
+    logger.initialize('Handling subscription information...');
 
     await wishContinue(prompts);
 
-    console.log('Subscription information successfully handled.');
+    logger.success('Subscription information successfully handled.');
   } catch (error) {
-    console.error('Unable to handle subscription information:', error);
+    logger.error('Unable to handle subscription information:', error);
     throw error;
   }
 }

@@ -1,13 +1,16 @@
-const readTextFile = require('../../text_edit_services/read/read_text_file');
-const editPartTitle = require('../../text_edit_services/edit/edit_part_title');
-const removeListenToAudio = require('../../text_edit_services/edit/remove_listen_to_audio');
-const removeReferences = require('../../text_edit_services/edit/remove_references');
-const editSectionTitle = require('../../text_edit_services/edit/edit_section_title');
-const chunkStrings = require('../../text_edit_services/edit/chunk_strings');
+const logger = require('loggers');
+const {
+  readTextFile,
+  editPartTitle,
+  removeListenToAudio,
+  removeReferences,
+  editSectionTitle,
+  chunkStrings,
+} = require('editTextServices');
 
 async function editTextFile(path) {
   try {
-    console.log('Generating processed string...');
+    logger.initialize('Generating processed string...');
 
     const textString = await readTextFile(path);
 
@@ -30,10 +33,10 @@ async function editTextFile(path) {
       chunk.join('\r\n\r\n')
     );
 
-    console.log('Processed string has been generated.');
+    logger.success('Processed string has been generated.');
     return joinedChunkArrays;
   } catch (err) {
-    console.error('Error editing file:', err);
+    logger.error('Error editing file:', err);
   }
 }
 

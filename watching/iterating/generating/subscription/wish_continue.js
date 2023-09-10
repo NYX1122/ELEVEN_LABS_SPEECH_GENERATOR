@@ -1,3 +1,4 @@
+const logger = require('loggers');
 const readline = require('readline');
 
 function wishContinue(prompts, index = 0) {
@@ -15,18 +16,18 @@ function wishContinue(prompts, index = 0) {
     const currentPrompt = prompts[index];
 
     if (!currentPrompt.needsAnswer) {
-      console.log(currentPrompt.text);
+      logger.prompt(currentPrompt.text);
       rl.close();
       wishContinue(prompts, index + 1).then(resolve);
     } else {
-      console.log(currentPrompt.text);
+      logger.prompt(currentPrompt.text);
       rl.question('', (answer) => {
         rl.close();
         if (answer.trim().toLowerCase() === 'y') {
-          console.log('Proceeding...');
+          logger.initialize('Proceeding...');
           wishContinue(prompts, index + 1).then(resolve);
         } else {
-          console.log('Closing application...');
+          logger.initialize('Closing application...');
           process.exit();
         }
       });
