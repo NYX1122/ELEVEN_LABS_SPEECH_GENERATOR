@@ -5,11 +5,11 @@ const playAudioWithVlc = require('playAudioWithVlc');
 let currentFileIndex = 0;
 let isPlayerRunning = false;
 
-async function playNextFile(files) {
+async function playNextFile(files, configData) {
   if (!isPlayerRunning) {
     isPlayerRunning = true;
     while (currentFileIndex < files.length) {
-      await playAudioWithVlc(files[currentFileIndex]);
+      await playAudioWithVlc(files[currentFileIndex], configData);
       currentFileIndex++;
     }
     isPlayerRunning = false;
@@ -41,7 +41,7 @@ async function generationIterator(array, configData) {
 
       // Start playing after the first file is generated
       if (iteration === 0) {
-        playNextFile(generatedFiles);
+        playNextFile(generatedFiles, configData);
       }
     } catch (error) {
       logger.error('Error generating audio for chunk:', error);

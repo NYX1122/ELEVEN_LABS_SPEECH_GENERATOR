@@ -4,10 +4,10 @@ const path = require('path');
 const watchAddHandler = require('watchAddHandler');
 
 function startWatching(configData) {
-  const resolvedPath = path.resolve(__dirname, configData.pathToWatch);
+  const watchFolder = configData.folderToWatch;
   return new Promise((resolve, reject) => {
     logger.initialize('Initializing watcher...');
-    const watcher = chokidar.watch(resolvedPath, {
+    const watcher = chokidar.watch(watchFolder, {
       ignored: /(^|[\/\\])\../,
       persistent: true,
     });
@@ -16,7 +16,7 @@ function startWatching(configData) {
       .on('ready', () => {
         logger.success('Watcher initialized!');
         logger.output('Watching Path');
-        logger.output(resolvedPath);
+        logger.output(watchFolder);
       })
       .on('add', async (path) => {
         try {

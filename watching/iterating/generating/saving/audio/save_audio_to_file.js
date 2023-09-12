@@ -3,8 +3,13 @@ const logger = require('loggers');
 const fs = require('fs');
 const path = require('path');
 
-async function saveAudioToFile(fileName, dataStream, estimatedSize) {
-  const resolvedPath = path.resolve('downloads', fileName);
+async function saveAudioToFile(
+  fileName,
+  dataStream,
+  estimatedSize,
+  configData
+) {
+  const resolvedPath = path.resolve(configData.folderToOutput, fileName);
 
   return new Promise((resolve, reject) => {
     logger.initialize('Beginning data stream...');

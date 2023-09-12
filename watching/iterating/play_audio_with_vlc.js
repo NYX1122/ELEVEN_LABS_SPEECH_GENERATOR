@@ -15,8 +15,8 @@ function fileExists(filePath) {
   }
 }
 
-async function playAudioWithVlc(fileName, retries = 5) {
-  const absoluteFilePath = path.resolve('downloads', fileName);
+async function playAudioWithVlc(fileName, configData, retries = 5) {
+  const absoluteFilePath = path.resolve(configData.folderToOutput, fileName);
   logger.initialize(`Trying to play: ${absoluteFilePath}`);
 
   if (!fileExists(absoluteFilePath)) {
@@ -43,7 +43,7 @@ async function playAudioWithVlc(fileName, retries = 5) {
             `Error playing file ${fileName}. Retrying in 2 seconds...`
           );
           await delay(2000); // Wait for 2 seconds before retrying
-          return resolve(playAudioWithVlc(fileName, retries - 1));
+          return resolve(playAudioWithVlc(fileName, configData, retries - 1));
         } else {
           logger.error('Unable to play mp3 file with vlc:', error);
           reject(error);
@@ -57,7 +57,7 @@ async function playAudioWithVlc(fileName, retries = 5) {
               `VLC process exited with code ${code}. Retrying in 2 seconds...`
             );
             await delay(2000); // Wait for 2 seconds before retrying
-            return resolve(playAudioWithVlc(fileName, retries - 1));
+            return resolve(playAudioWithVlc(fileName, configData, retries - 1));
           } else {
             logger.error(`VLC process exited with code ${code}`);
             reject(new Error(`VLC process exited with code ${code}`));

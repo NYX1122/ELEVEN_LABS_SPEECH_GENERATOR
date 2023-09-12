@@ -10,7 +10,7 @@ const fetchHandler = async (configData, text, fileName, charCount) => {
 
     const estimatedSize = charCount * 709.717;
 
-    await saveAudioToFile(fileName, response.data, estimatedSize);
+    await saveAudioToFile(fileName, response.data, estimatedSize, configData);
 
     logger.success('Fetch successfully handled.');
   } catch (error) {
